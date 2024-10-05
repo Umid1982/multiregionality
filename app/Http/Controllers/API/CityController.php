@@ -1,59 +1,29 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Console\Constants\CityResponseEnum;
+use App\Http\Requests\City\StoreRequest;
+use App\Http\Resources\CityResource;
 use App\Models\City;
-use Illuminate\Http\Request;
+use App\Services\CityService;
 
 class CityController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct(protected readonly CityService $cityService)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(City $city)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(City $city)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, City $city)
-    {
-        //
+        $data = $this->cityService->storeCity($request->toDTO());
+        return response([
+            'data' => CityResource::make($data),
+            'success' => true
+        ]);
     }
 
     /**
@@ -61,6 +31,8 @@ class CityController extends Controller
      */
     public function destroy(City $city)
     {
-        //
+        $this->cityService->deleteCity($city);
+        return response(['success' => true]);
     }
+
 }
