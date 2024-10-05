@@ -1,66 +1,160 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+1. Описание проекта
+   Название проекта: Мультирегиональный проект для работы с городами.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Описание: Этот проект предоставляет API для управления городами, включая создание, обновление и удаление записей о городах.
 
-## About Laravel
+2. Установка
+   Клонируйте репозиторий:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+```bash
+Копировать код
+git clone https://github.com/Umid1982/multiregionality.git
+cd yourproject
+```
+Установите зависимости:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```bash
+Копировать код
+composer install
+```
+Настройте файл .env и выполните миграции:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```bash
+Копировать код
+php artisan migrate
+```
+3. Использование
+   Вы можете использовать проект через API и веб-интерфейс. Для этого отправляйте HTTP-запросы на указанные конечные точки или открывайте веб-страницы.
 
-## Learning Laravel
+4. Документация API
+   Контроллеры
+   CityController
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Метод: index
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Описание: Отображает список городов и выбранный город.
+Ответ: Возвращает представление welcome с данными о городах и выбранном городе.
+Метод: store
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Описание: Создает новый город.
+Параметры:
+name (string): Название города (обязательный).
+Ответ: JSON-ответ с данными созданного города и сообщением.
+Метод: destroy
 
-## Laravel Sponsors
+Описание: Удаляет указанный город.
+Параметры:
+city (City): Модель города для удаления.
+Ответ: JSON-ответ с сообщением об успешном удалении.
+Метод: setCity
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Описание: Устанавливает выбранный город в сессии и перенаправляет на главную страницу.
+Параметры:
+city (City): Модель выбранного города.
+Ответ: Перенаправление на маршрут index.
+MainController
 
-### Premium Partners
+Метод: about
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Описание: Отображает информацию о проекте.
+Ответ: Возвращает представление about с данными о выбранном городе.
+Метод: news
 
-## Contributing
+Описание: Отображает новости.
+Ответ: Возвращает представление news с данными о выбранном городе.
+Сервисы
+CityService
+Метод: storeCity(CityDTO $cityDTO)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Описание: Обрабатывает логику сохранения города.
+Параметры:
+cityDTO (CityDTO): Объект DTO с данными о городе.
+Возвращает: Созданный объект города.
+Метод: deleteCity(City $city)
 
-## Code of Conduct
+Описание: Удаляет город.
+Параметры:
+city (City): Объект города.
+Возвращает: Результат операции удаления.
+Репозитории
+CityRepository
+Метод: create(CityDTO $cityDTO)
+Описание: Создает запись о городе в базе данных.
+Параметры:
+cityDTO (CityDTO): Объект DTO с данными о городе.
+Возвращает: Созданный объект города.
+5. DTO (Data Transfer Objects)
+   CityDTO
+   Свойства:
+   name (string): Название города.
+   slug (string): Уникальный идентификатор города (генерируется автоматически).
+   Метод: __construct(public string $name)
+   Описание: Конструктор, который принимает название города и генерирует слаг.
+6. Парсинг городов
+   Метод парсинга городов работает следующим образом:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Метод: handle
+Описание: Получает список городов из API и сохраняет их в базе данных.
+Логика:
+Запрашивает данные о городах с помощью HTTP GET запроса к API.
+Извлекает города России по ID 113.
 
-## Security Vulnerabilities
+Для каждого города генерирует слаг и использует метод updateOrInsert для создания или обновления записи в базе данных.
+Сообщает о успешном завершении операции.
+```bash
+Копировать код
+php artisan parse:cities russia  
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+7.Документация по тестированию API
+1. Создание города
+   URL: /api/v1/cities
+   Метод: POST
 
-## License
+   Заголовки:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Content-Type: application/json
+Тело запроса:
+
+json
+```bash
+Копировать код
+{
+"name": "Херсонская область"
+}
+```
+Ожидаемый ответ:
+```bash
+Статус: 201 Created
+Тело ответа:
+json
+Копировать код
+{
+"data": {
+"id": 91,
+"name": "Херсонская область",
+"slug": "xersonskaia-oblast"
+},
+"message": "City created",
+"success": true
+}
+```
+
+2.Удаление города
+URL: /api/v1/cities/{city}
+Метод: DELETE
+
+Описание:
+Этот маршрут удаляет город по указанному идентификатору. Необходимо заменить {city} на фактический ID города, который вы хотите удалить.
+
+Ожидаемый ответ:
+```bash
+Статус: 200 OK
+Тело ответа:
+json
+Копировать код
+{
+"message": "City deleted",
+"success": true
+}
+```
